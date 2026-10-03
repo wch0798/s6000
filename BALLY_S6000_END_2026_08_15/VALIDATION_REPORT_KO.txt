@@ -1,0 +1,52 @@
+V6.5.14 RAM AUTO-CLEAR VALIDATION REPORT
+========================================
+
+1. C++ stub syntax-only compile
+   PASS / error 0
+   - Arduino core 자체는 이 런타임에 설치되어 있지 않아 실제 renesas_uno core compile은 수행하지 못함.
+   - Arduino API/library stub을 사용한 C++ syntax 검사는 error 0.
+
+2. Static / state-model validation
+   46/46 PASS
+
+중요 검증 항목
+--------------
+PASS: transaction write function contains no EEPROM access
+PASS: boot transaction loader contains no EEPROM journal read
+PASS: only profile EEPROM.put calls remain (2 places)
+PASS: runtime clear sets v6LatestJournalValid=false
+PASS: runtime clear sets v6RecoveryRequired=false
+PASS: runtime clear does not touch EEPROM
+PASS: deposit waits for exact LP1A proof
+PASS: deposit PRE==NOW uses 3 additional LP1A stable reads
+PASS: PRE==NOW stable -> RAM transaction clear
+PASS: PRE==NOW stable -> inputValue=0
+PASS: recovery PRE==NOW stable -> auto-clear
+PASS: RFID_ATOMIC recovery contains no sendLegacyBonus8A resend
+PASS: ambiguous NOW != PRE/EXPECT remains fail-closed recovery
+PASS: clear AFT rejection + unchanged CREDIT clears volatile transaction
+PASS: split AFT rejection + unchanged CREDIT clears volatile transaction
+PASS: calibrated 12-bit keypad centers preserved
+
+State model
+-----------
+PRE=0 EXPECT=1 NOW=0 stable=true   -> FAILED_CLEAR PASS
+PRE=250 EXPECT=251 NOW=250 stable  -> FAILED_CLEAR PASS
+PRE=0 EXPECT=1 NOW=1               -> SUCCESS PASS
+PRE=10 EXPECT=15 NOW=12            -> AMBIGUOUS_RECOVERY PASS
+PRE=0 EXPECT=1 NOW=0 stable=false  -> AMBIGUOUS_RECOVERY PASS
+
+Expected fix for real log
+-------------------------
+Input:
+  PRE=0 EXPECT=1 NOW=0
+
+Old V6.5.13:
+  RECOVERY_REQUIRED forever
+
+V6.5.14:
+  3 stable LP1A confirmations at PRE
+  -> FAILED
+  -> volatile RAM transaction cleared
+  -> Recovery CLEAR
+  -> no repeated recovery loop

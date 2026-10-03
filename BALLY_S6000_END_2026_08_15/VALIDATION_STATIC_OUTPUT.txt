@@ -1,0 +1,47 @@
+PASS: build id v6.5.14
+PASS: runtime clear helper exists
+PASS: clear invalidates journal
+PASS: clear drops recovery
+PASS: clear does not touch EEPROM
+PASS: stable no-move proof helper
+PASS: stable proof uses LP1A
+PASS: stable proof 3 calls used
+PASS: deposit exact meter authority
+PASS: deposit no-move tests PRE
+PASS: deposit no-move stable proof
+PASS: deposit no-move clears RAM
+PASS: deposit no-move clears input
+PASS: deposit ambiguous retains recovery
+PASS: deposit failure never retries 8A
+PASS: rfid recovery expected success path
+PASS: rfid recovery no-move PRE path
+PASS: rfid recovery stable no-move proof
+PASS: rfid recovery auto-clears RAM
+PASS: rfid recovery no 8A resend
+PASS: rfid recovery ambiguous no manual-review loop text
+PASS: AFT immediate reject clears RAM
+PASS: cashout recovery reject clears RAM
+PASS: cashout FF reject clears RAM
+PASS: split reject clears RAM
+PASS: transaction write function RAM only
+PASS: boot does not load legacy tx EEPROM
+PASS: profile EEPROM puts only two
+PASS: normal setup is 12 bit
+PASS: key center #=931
+PASS: key center 1=1081
+PASS: key center 9=1598
+PASS: key center *=1738
+PASS: key center 2=1817
+PASS: key center 0=2000
+PASS: key center 8=2224
+PASS: key center 7=2356
+PASS: key center 4=2677
+PASS: key center 3=3109
+PASS: key center 6=3385
+PASS: key center 5=4095
+PASS: model 0->1 stays 0 auto-clear
+PASS: model 250->251 stays 250 auto-clear
+PASS: model reaches expected success
+PASS: model intermediate/other ambiguous
+PASS: model unstable PRE remains recovery
+VALIDATION 46/46
